@@ -3,7 +3,8 @@
 
 @layer base{
   body{
-    @apply bg-liner-to-b from-blue-200 to-blue-500 font-(family-name:--font-poppins)
+    font-family: var(--font-poppins);
+    @apply bg-gradient-to-r from-blue-200 to-blue-500 min-h-screen;
   }
 }
 

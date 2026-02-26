@@ -1,5 +1,8 @@
+import { Header } from '../components/Header'
 export const SearchRecipe = () => {
     return(
-        <div>Search Recipe</div>
+        <div>
+            <Header/>
+        </div>
     )
 }

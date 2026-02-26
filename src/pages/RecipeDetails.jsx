@@ -1,5 +1,8 @@
+import { Header } from '../components/Header';
 export const RecipeDetails = () => {
     return(
-        <div>Recipe Details</div>
+        <div>
+            <Header/>
+        </div>
     )
 }

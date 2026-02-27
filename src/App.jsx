@@ -10,7 +10,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='search' element={<SearchRecipe/>}/>
-      <Route path='recipes' element={<RecipeDetails/>}/>
+      <Route path='recipes/:id' element={<RecipeDetails/>}/>
       <Route path='favourites' element={<Favourites/>}/>
       <Route path='*' element='Not found 404'/>
     </Routes>

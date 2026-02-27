@@ -1,6 +1,7 @@
 import { Header } from '../components/Header';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useFavourites } from '../context/FavouritesContext';
 import heartFill from '../assets/heart.png';
 import heartOutline from '../assets/heart-black.png';
 import axios from 'axios';
@@ -12,7 +13,7 @@ export const SearchRecipe = () => {
     const [input, setInput] = useState('');
     const [products, setProducts] = useState([]);
     const [searched, setSearched] = useState('');
-    const [favIcon, setFavIcon] = useState([]);
+    const { addFavourite, removeFavourite, isFavourite} = useFavourites();
 
     useEffect(() => {
         axios
@@ -35,15 +36,48 @@ export const SearchRecipe = () => {
         navigator(`/recipes/${id}`)
     }
 
-    const handleFavouite = (id) => {
-        setFavIcon((prev) => {
-            if(prev.includes(id)){
-                return prev.filter((item) => item !== id)
-            }
-            return[...prev, id]
-        })
+    const handleFavouite = (recipe) => {
+
+        const stored = localStorage.getItem('favorites');
+        const favorites = stored ? JSON.parse(stored) : {};
+
+        if(favorites[recipe.idMeal]){
+            delete favorites[recipe.idMeal];
+            localStorage.setItem('favorites', JSON.stringify(favorites))
+
+            setFavIcon((prev) => prev.filter(id => id !== recipe.idMeal));
+        }
+        else {
+            favorites[recipe.idMeal] = {
+                id: recipe.idMeal,
+                title: recipe.strMeal,
+                category: recipe.strCategory,
+                image: recipe.strMealThumb,
+                instructions: recipe.strInstructions,
+                ingredients: extractIngredients(recipe)
+            };
+
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            setFavIcon((prev) => [...prev, recipe.idMeal]);
+        }
     }
 
+     const extractIngredients = (recipe) => {
+        const ingredients = [];
+
+        for (let i = 1; i <= 20; i++){
+            const ingredient = recipe[`strIngredient${i}`];
+            const measure = recipe[`strMeasure${i}`];
+
+            if(ingredient && ingredient.trim() !== ''){
+                ingredients.push(`${measure || ''} ${ingredient}`.trim());
+            }
+        }
+
+        return ingredients;
+    }
+
+    
     return(
         <div className='h-screen'>
             <Header/>
@@ -112,22 +146,29 @@ export const SearchRecipe = () => {
                                            p-2 rounded mt-3 cursor-pointer
                                            flex-3' 
                                 onClick={()=> handleClick(items.idMeal)}>
-                                View
+                                view recipe
                             </button>
 
                             <button className='text-sm bg-amber-100
                                            p-2 rounded mt-3 cursor-pointer
                                            flex-1 justify-center items-center'
-                                    onClick={() =>handleFavouite(items.idMeal)}>
+                                    onClick={() =>{
+
+                                            if(isFavourite(items.idMeal)){
+                                                removeFavourite(items.idMeal);
+                                            }
+                                            else{
+                                                addFavourite(items);
+                                            }
+                                    }}>
 
                                     
                                 <img className='h-5 mx-2' 
-                                    src={favIcon.includes(items.idMeal) ? heartFill : heartOutline}  alt="fav-icon" />
+                                    src={isFavourite(items.idMeal) ? heartFill : heartOutline}  alt="fav-icon" />
         
                             </button>
 
                         </div>
-
                         
                     </div>
                         

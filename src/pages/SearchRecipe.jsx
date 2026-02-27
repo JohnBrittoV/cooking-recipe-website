@@ -1,8 +1,140 @@
-import { Header } from '../components/Header'
+import { Header } from '../components/Header';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import heartFill from '../assets/heart.png';
+import heartOutline from '../assets/heart-black.png';
+import axios from 'axios';
+
 export const SearchRecipe = () => {
+
+    const navigator = useNavigate();
+
+    const [input, setInput] = useState('');
+    const [products, setProducts] = useState([]);
+    const [searched, setSearched] = useState('');
+    const [favIcon, setFavIcon] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searched}`)
+            .then((res) => {
+                return setProducts(res.data.meals || [])
+            })
+            .catch((err) => {console.log(err.message)})
+        }, [searched])
+
+    const handleChange = (e) => {
+        setInput(e.target.value)
+    }
+
+    const handleSubmit = (e) => {
+        setSearched(input)
+    }
+
+    const handleClick = (id) => {
+        navigator(`/recipes/${id}`)
+    }
+
+    const handleFavouite = (id) => {
+        setFavIcon((prev) => {
+            if(prev.includes(id)){
+                return prev.filter((item) => item !== id)
+            }
+            return[...prev, id]
+        })
+    }
+
     return(
-        <div>
+        <div className='h-screen'>
             <Header/>
+
+            {/* search input */}
+            <div className='m-10 flex justify-center'>
+
+                <input className='p-3 border-amber-200 
+                                  rounded-2xl bg-white 
+                                  text-md w-full h-10 lg:w-1/2' 
+                        type="text" placeholder='Search Recipes' 
+                        onChange={(event) => handleChange(event)} id='searchInput'/>
+
+                <button className='ml-5 bg-amber-300 py-2 px-3
+                                  rounded-2xl text-sm 
+                                  cousor-pointer shadow-2xs'
+                        
+                        onClick={(event) => handleSubmit(event)}>
+                    
+                    Search</button>
+            </div>
+
+            {searched && products.length === 0 && (<p className='flex justify-center'>No products found</p>)}
+            
+
+            {/* Product Grid */}
+
+            <div className='grid grid-cols-1 sm:grid-cols-2 
+                        md:grid-cols-3 lg:grid-cols-4
+                        xl:grid-cols-5 gap-6'>
+
+                {products.map((items)=>{
+                    return (
+                    
+                    <div
+                        className='flex flex-col justify-between 
+                                 bg-white p-4 sm:p-5 rounded-2xl 
+                                   shadow-sm hover:shadow-2xl
+                                   hover:-translate-y-2 transition-all
+                                   duration-200 m-3'
+                                   key={items.idMeal}>
+                                
+                        <div className='mb-5'  >
+                            <img src={items.strMealThumb} 
+                                alt={items.strMeal} 
+                                className='rounded border w-full 
+                                           h-48 sm:h-56 object-cover'/>
+                        </div>
+
+                        <div className='flex flex-col sm:flex-row 
+                                        sm:justify-between 
+                                        sm:item-center gap-2 
+                                        items-center w-full'>
+
+                            <h2 className='font-semibold text-sm 
+                                           sm:text-base line-clamp-2'>{items.strMeal}</h2>
+
+                            <p className='text-xs ml-5 bg-amber-300 
+                                         px-1 py-1 rounded w-fit'>{items.strCategory}</p>                               
+                        </div>
+
+                        <div className='flex flex-row items-center 
+                                        justify-center gap-2'>
+                            
+                            <button className='text-sm bg-amber-400
+                                           p-2 rounded mt-3 cursor-pointer
+                                           flex-3' 
+                                onClick={()=> handleClick(items.idMeal)}>
+                                View
+                            </button>
+
+                            <button className='text-sm bg-amber-100
+                                           p-2 rounded mt-3 cursor-pointer
+                                           flex-1 justify-center items-center'
+                                    onClick={() =>handleFavouite(items.idMeal)}>
+
+                                    
+                                <img className='h-5 mx-2' 
+                                    src={favIcon.includes(items.idMeal) ? heartFill : heartOutline}  alt="fav-icon" />
+        
+                            </button>
+
+                        </div>
+
+                        
+                    </div>
+                        
+                )})}
+            </div>
         </div>
+
+        
     )
 }

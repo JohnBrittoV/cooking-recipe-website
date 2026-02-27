@@ -90,7 +90,7 @@ export const SearchRecipe = () => {
                         type="text" placeholder='Search Recipes' 
                         onChange={(event) => handleChange(event)} id='searchInput'/>
 
-                <button className='ml-5 bg-amber-300 py- px-5
+                <button className='ml-5 bg-amber-300 py-3 px-5
                                   rounded-2xl text-sm 
                                   cousor-pointer shadow-2xs'
                         

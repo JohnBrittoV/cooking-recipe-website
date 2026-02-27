@@ -7,7 +7,7 @@ import axios from 'axios';
 export const Home = () => {
 
     const [products, setProducts] = useState([]);
-
+    
     useEffect(() => {
         axios
             .get(`https://www.themealdb.com/api/json/v1/1/categories.php`)
@@ -16,7 +16,7 @@ export const Home = () => {
     },[])
     
     return(
-        <div>
+        <div className='min-h-screen flex flex-col'>
             <Header/>
             <Banner/>
 

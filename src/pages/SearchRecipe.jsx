@@ -77,7 +77,6 @@ export const SearchRecipe = () => {
         return ingredients;
     }
 
-    
     return(
         <div className='h-screen'>
             <Header/>
@@ -87,11 +86,11 @@ export const SearchRecipe = () => {
 
                 <input className='p-3 border-amber-200 
                                   rounded-2xl bg-white 
-                                  text-md w-full h-10 lg:w-1/2' 
+                                  text-md w-full h-12 lg:w-1/2' 
                         type="text" placeholder='Search Recipes' 
                         onChange={(event) => handleChange(event)} id='searchInput'/>
 
-                <button className='ml-5 bg-amber-300 py-2 px-3
+                <button className='ml-5 bg-amber-300 py- px-5
                                   rounded-2xl text-sm 
                                   cousor-pointer shadow-2xs'
                         
@@ -107,7 +106,7 @@ export const SearchRecipe = () => {
 
             <div className='grid grid-cols-1 sm:grid-cols-2 
                         md:grid-cols-3 lg:grid-cols-4
-                        xl:grid-cols-5 gap-6'>
+                        xl:grid-cols-5 gap-6 mx-5 mb-5'>
 
                 {products.map((items)=>{
                     return (

@@ -4,7 +4,7 @@
 @layer base{
   body{
     font-family: var(--font-poppins);
-    @apply bg-gradient-to-r from-blue-100 to-blue-300 min-h-screen;
+    @apply bg-linear-to-r from-blue-100 to-blue-300 min-h-screen;
   }
 }
 

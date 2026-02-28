@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFavourites } from '../context/FavouritesContext';
 import { Footer } from '../components/Footer';
+import { Spinner } from '../components/Spinner';
 import heartFill from '../assets/heart.png';
 import heartOutline from '../assets/heart-black.png';
 import axios from 'axios';
@@ -10,19 +11,26 @@ import axios from 'axios';
 export const SearchRecipe = () => {
 
     const navigator = useNavigate();
-
+    const [loading, setLoading] = useState(false);
     const [input, setInput] = useState('');
     const [products, setProducts] = useState([]);
     const [searched, setSearched] = useState('');
     const {addFavourite, removeFavourite, isFavourite} = useFavourites();
 
     useEffect(() => {
+        setLoading(true);
         axios
             .get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searched}`)
             .then((res) => {
-                return setProducts(res.data.meals || [])
+                setTimeout(() => {
+                    setProducts(res.data.meals || [])
+                    setLoading(false);
+                }, 500)
             })
-            .catch((err) => {console.log(err.message)})
+            .catch((err) => {
+                console.log(err.message);
+                setLoading(false);
+            })
         }, [searched])
 
     const handleChange = (e) => {
@@ -35,6 +43,10 @@ export const SearchRecipe = () => {
 
     const handleClick = (id) => {
         navigator(`/recipes/${id}`)
+    }
+
+    if(loading){
+        return <Spinner/>
     }
 
     const handleFavouite = (recipe) => {
@@ -95,7 +107,7 @@ export const SearchRecipe = () => {
 
                     <button className='ml-5 bg-amber-300 py-3 px-5
                                     rounded-2xl text-sm 
-                                    cousor-pointer shadow-2xs'
+                                    cursor-pointer shadow-2xs'
                             
                             onClick={(event) => handleSubmit(event)}>
                         
@@ -103,7 +115,6 @@ export const SearchRecipe = () => {
                 </div>
 
                 {searched && products.length === 0 && (<p className='flex justify-center'>No products found</p>)}
-            
 
                 {/* Product Grid */}
 
@@ -145,14 +156,14 @@ export const SearchRecipe = () => {
                                             justify-center gap-2'>
                                 
                                 <button className='text-sm bg-amber-400
-                                            p-2 rounded mt-3 cursor-pointer
+                                            p-3 rounded mt-3 cursor-pointer
                                             flex-4' 
                                     onClick={()=> handleClick(items.idMeal)}>
-                                    view recipe
+                                    View recipe
                                 </button>
 
                                 <button className='text-sm bg-amber-100 flex
-                                            p-2 rounded mt-3 cursor-pointer
+                                            p-3 rounded mt-3 cursor-pointer
                                             flex-1 justify-center items-center'
                                         onClick={() =>{
 
@@ -180,7 +191,5 @@ export const SearchRecipe = () => {
 
             <Footer/>
         </div>
-
-        
     )
 }

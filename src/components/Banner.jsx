@@ -27,7 +27,8 @@ export const Banner = () => {
                 <img src={bannerImg} alt="banner" 
                      className='w-64 sm:w-80 md:w-96 lg:w-150 h-auto'/>
 
-                <button className='bg-[#fac400] py-3 px-5
+                <button className='bg-[#fac400] py-3 
+                                    px-5 cursor-pointer
                                     rounded-2xl mt-10'
                         onClick={() => navigator('/search')}>Search Recipes</button>
             </div>

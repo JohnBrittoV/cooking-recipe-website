@@ -1,19 +1,35 @@
 import { Header } from '../components/Header';
 import { Banner } from '../components/Banner';
 import { Footer } from '../components/Footer';
+import { Spinner } from '../components/Spinner';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export const Home = () => {
 
     const [products, setProducts] = useState([]);
+    const [spinner, setSpinner] = useState(false);
     
     useEffect(() => {
+        setSpinner(true);
         axios
             .get(`https://www.themealdb.com/api/json/v1/1/categories.php`)
-            .then((res) => setProducts(res.data.categories))
-            .catch((err) => console.log(err.message))
-    },[])
+            .then((res) =>{
+                setTimeout(() => {
+                    setProducts(res.data.categories)
+                    setSpinner(false)
+                },1000)
+                
+            })
+            .catch((err) => {
+                console.log(err.message);
+                setSpinner(false);
+            })
+        },[])
+
+        if(spinner){
+            return <Spinner/>
+        }
     
     return(
         <div className='min-h-screen flex flex-col'>
@@ -33,13 +49,15 @@ export const Home = () => {
                             <div key={items.idCategory} 
                                 className='flex flex-col items-center 
                                             justify-center rounded-2xl
-                                            shadow-md hover:shadow2xl 0.3s
-                                            hover:-translate-y-2 transition-all duration-300
+                                            shadow-sm hover:shadow2xl 0.3s
+                                            hover:-translate-y-2 transition-all 
+                                            duration-300 cursor-pointer
                                             p-6 bg-white m-5 text-center'>
 
                                     <img src={items.strCategoryThumb} 
                                         alt="category-image" 
-                                        className='w-full h-48 object-cover rounded-lg'/>
+                                        className='w-full h-48 object-cover 
+                                                   rounded-lg'/>
 
                                     <p className='mt-4 text-lg font-semibold'>
                                         {items.strCategory}</p>

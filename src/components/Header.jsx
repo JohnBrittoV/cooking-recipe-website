@@ -19,8 +19,8 @@ export const Header = () => {
             <nav className='flex items-center 
                             justify-between p-4'>
                 
-                <div className='flex items-center 
-                                gap-5 mx-5'
+                <div className='flex items-center gap-5 
+                                mx-5 cursor-pointer'
 
                      onClick={handleClick}>
 

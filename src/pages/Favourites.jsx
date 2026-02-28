@@ -1,7 +1,9 @@
 import { useFavourites } from "../context/FavouritesContext";
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { Spinner } from '../components/Spinner';
 
 export const Favourites = () => {
     
@@ -9,8 +11,23 @@ export const Favourites = () => {
     const favouriteList = Object.values(favourites);
     const navigator = useNavigate();
 
+    const [loading, setLoading] = useState(false);
+    
+    useEffect(() => {
+        setLoading(true);
+        const timer = setTimeout(() => {
+            setLoading(false)
+        }, 1000)
+
+        return () => clearTimeout(timer)
+    },[])
+
     const handleClick = (itemId) => {
         navigator(`/recipes/${itemId}`)
+    }
+
+    if(loading){
+        return <Spinner/>
     }
 
     return(

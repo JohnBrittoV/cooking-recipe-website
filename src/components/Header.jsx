@@ -1,12 +1,17 @@
 import logo from '../assets/chef-hat.png';
 import menu from '../assets/menu-icon.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 export const Header = () => {
 
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
+    const navigator = useNavigate();
+
+    const handleClick = () => {
+        navigator('/');
+    }
 
     return(
         <div className='w-full overflow-x-hidden'>
@@ -15,7 +20,9 @@ export const Header = () => {
                             justify-between p-4'>
                 
                 <div className='flex items-center 
-                                gap-5 mx-5'>
+                                gap-5 mx-5'
+
+                     onClick={handleClick}>
 
                     <img src={logo} alt="logo" 
                          className='h-12 sm:h-14 

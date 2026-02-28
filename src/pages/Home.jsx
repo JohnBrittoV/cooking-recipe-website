@@ -20,33 +20,36 @@ export const Home = () => {
             <Header/>
             <Banner/>
 
-            {/* Product Grid view */}
-            <div className='grid grid-cols-1 sm:grid-cols-2 
-                            md:grid-cols-3 lg:grid-cols-4
-                            xl:grid-cols-5 gap-6 px-6 py-10'>
+            <main className='flex-1'>
 
-                {products.map((items) => {
-                    return (
-                        
-                        <div key={items.idCategory} 
-                             className='flex flex-col items-center 
-                                        justify-center rounded-2xl
-                                        shadow-md hover:shadow2xl 0.3s
-                                        hover:-translate-y-2 transition-all duration-300
-                                        p-6 bg-white m-5 text-center'>
+                {/* Product Grid view */}
+                <div className='grid grid-cols-1 sm:grid-cols-2 
+                                md:grid-cols-3 lg:grid-cols-4
+                                xl:grid-cols-5 gap-6 px-6 py-10'>
 
-                                <img src={items.strCategoryThumb} 
-                                     alt="category-image" 
-                                     className='w-full h-48 object-cover rounded-lg'/>
+                    {products.map((items) => {
+                        return (
+                            
+                            <div key={items.idCategory} 
+                                className='flex flex-col items-center 
+                                            justify-center rounded-2xl
+                                            shadow-md hover:shadow2xl 0.3s
+                                            hover:-translate-y-2 transition-all duration-300
+                                            p-6 bg-white m-5 text-center'>
 
-                                <p className='mt-4 text-lg font-semibold'>
-                                    {items.strCategory}</p>
+                                    <img src={items.strCategoryThumb} 
+                                        alt="category-image" 
+                                        className='w-full h-48 object-cover rounded-lg'/>
 
-                        </div>
-                    )
-                })}
+                                    <p className='mt-4 text-lg font-semibold'>
+                                        {items.strCategory}</p>
 
-            </div>
+                            </div>
+                        )
+                    })}
+
+                </div>
+            </main>
 
             <Footer/>
 

@@ -1,11 +1,16 @@
 import { useFavourites } from "../context/FavouritesContext";
+import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
-
 
 export const Favourites = () => {
     
     const { favourites, removeFavourite} = useFavourites();
     const favouriteList = Object.values(favourites);
+    const navigator = useNavigate();
+
+    const handleClick = (itemId) => {
+        navigator(`/recipes/${itemId}`)
+    }
 
     return(
 
@@ -45,12 +50,24 @@ export const Favourites = () => {
                                     {recipe.strMeal}
                             </h2>
 
-                            <button className="mt-3 p-2 bg-amber-300
-                                               rounded text-black"
+                            <div className="flex gap-2">
+
+                                <button className="mt-3 p-2 bg-amber-100 
+                                                   border-amber-300 border-2
+                                                   rounded text-black flex-1"
+                                        onClick={() => handleClick(recipe.idMeal)}>
+                                    View
+                                </button>
+                                
+                                <button className="mt-3 p-2 bg-amber-300
+                                               rounded text-black flex-1"
                                     onClick={() => removeFavourite(recipe.idMeal)}>                                    
-                                    
-                                Remove
-                            </button>
+                                    Remove
+                                </button>
+
+                                
+
+                            </div>
 
                         </div>
                     

@@ -8,6 +8,7 @@ export const Banner = () => {
     return(
         <div className='flex flex-col md:flex-row
                         justify-center items-center
+                        xs:flex-row-reverse
                         gap-8 px-6 py-10 text-center'>
             
             <div className='text-center md:text-left'>
@@ -18,7 +19,7 @@ export const Banner = () => {
 
                 <p className='mt-3 text-gray-600 
                               text-sm sm:text-base'>
-                    Explore our easy and Tasty Recipe</p>
+                    Explore our easy and Tasty Recipes.</p>
 
             </div>
 

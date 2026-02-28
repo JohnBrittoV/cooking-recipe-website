@@ -13,7 +13,7 @@ export const SearchRecipe = () => {
     const [input, setInput] = useState('');
     const [products, setProducts] = useState([]);
     const [searched, setSearched] = useState('');
-    const { addFavourite, removeFavourite, isFavourite} = useFavourites();
+    const {addFavourite, removeFavourite, isFavourite} = useFavourites();
 
     useEffect(() => {
         axios

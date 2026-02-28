@@ -33,7 +33,7 @@ export const RecipeDetails = () => {
         <div className='min-h-screen flex flex-col'>
             <Header/>
             
-             <div className='flex-1 py-8 px-4 sm:px-6 lg:px-10 justify-between'>
+            <div className='flex-1 py-8 px-4 sm:px-6 lg:px-10 justify-between'>
 
                 <div className='max-w-6xl mx-auto flex flex-col justify-between 
                                  bg-white p-4 sm:p-5 rounded-2xl 

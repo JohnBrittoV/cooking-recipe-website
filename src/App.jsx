@@ -3,6 +3,7 @@ import { Home } from './pages/Home';
 import { SearchRecipe } from './pages/SearchRecipe';
 import { RecipeDetails } from './pages/RecipeDetails';
 import { Favourites } from './pages/Favourites';
+import { Category } from './pages/Category';
 
 function App() {
     
@@ -12,6 +13,7 @@ function App() {
       <Route path='search' element={<SearchRecipe/>}/>
       <Route path='recipes/:id' element={<RecipeDetails/>}/>
       <Route path='favourites' element={<Favourites/>}/>
+      <Route path='category' element={<Category/>}/>
       <Route path='*' element='Not found 404'/>
     </Routes>
   )

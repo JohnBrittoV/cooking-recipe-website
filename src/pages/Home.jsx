@@ -3,10 +3,11 @@ import { Banner } from '../components/Banner';
 import { Footer } from '../components/Footer';
 import { Spinner } from '../components/Spinner';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export const Home = () => {
-
+    const navigator = useNavigate()
     const [products, setProducts] = useState([]);
     const [spinner, setSpinner] = useState(false);
     
@@ -25,11 +26,15 @@ export const Home = () => {
                 console.log(err.message);
                 setSpinner(false);
             })
-        },[])
+    },[])
 
-        if(spinner){
-            return <Spinner/>
-        }
+    if(spinner){
+        return <Spinner/>
+    }
+
+    const handleClick = (category) => {
+        navigator(`/category/${category}`)
+    }
     
     return(
         <div className='min-h-screen flex flex-col'>
@@ -52,7 +57,8 @@ export const Home = () => {
                                             shadow-sm hover:shadow2xl 0.3s
                                             hover:-translate-y-2 transition-all 
                                             duration-300 cursor-pointer
-                                            p-6 bg-white m-5 text-center'>
+                                            p-6 bg-white m-5 text-center'
+                                onClick={() => handleClick(items.strCategory)}>
 
                                     <img src={items.strCategoryThumb} 
                                         alt="category-image" 

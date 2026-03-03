@@ -1,7 +1,8 @@
 import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
+import { Spinner} from '../components/Spinner';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Footer } from '../components/Footer';
 import axios from 'axios';
 
 export const RecipeDetails = () => {
@@ -9,18 +10,31 @@ export const RecipeDetails = () => {
     const {id} = useParams();
     let ingredients  = [];
     
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(false);
       
     useEffect(() => {
+        setLoading(true)
         axios
             .get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
-            .then((res) => {
-                return setProducts(res.data.meals[0])
+             .then((res) => {
+                setTimeout(() => {
+                    setProducts(res.data.meals[0]);
+                    setLoading(false);
+                }, 1000)
+                
+            })           
+            .catch((err) => {
+                console.log(err.message);
+                setLoading(false);
             })
-            .catch((err) => {console.log(err.message)})
     },[id]) 
 
-    {for(let i = 1; i < 20; i++){
+    if(loading){
+        return <Spinner/>
+    }
+
+    for(let i = 1; i < 20; i++){
         
         let foodIngredients = products[`strIngredient${i}`]
         let ingredientsMeasure = products[`strMeasure${i}`]
@@ -28,8 +42,8 @@ export const RecipeDetails = () => {
         if(foodIngredients !== ""){
             ingredients.push(`${foodIngredients} - ${ingredientsMeasure}`)
         }
-    }}
-    
+    }
+   
     return(
         <div className='min-h-screen flex flex-col'>
             <Header/>

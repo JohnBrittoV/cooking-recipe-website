@@ -10,13 +10,13 @@ Recipes are fetched dynamically from an external API and displayed in an intuiti
 https://cooking-recipe-website-mu.vercel.app
 
 # Features
-    Search recipes using APi
-    Display recipes in a responsive grid
-    View detailed recipe information
-    Add/remove favorites
-    Store favorites using localStorage
-    Loading spinner for better UX
-    Fully responsive design
+Search recipes using ApI
+Display recipes in a responsive grid
+View detailed recipe information
+Add/remove favorites
+Store favorites using localStorage
+Loading spinner for better UX
+Fully responsive design
 
 # Technology Used
 React (Vite)
@@ -26,6 +26,7 @@ React Context API
 JavaScript (ES6+)
 
 # Project Structure
+```
 src/
 │
 ├── assets/               # Static files
@@ -47,18 +48,19 @@ src/
 ├── App.jsx               # Main app component
 ├── main.jsx              # Entry point
 └── index.css             # Global styles
+```
 
 # Installation
-# Clone the repository
+## Clone the repository
 git clone https://github.com/JohnBrittoV/cooking-recipe-website.git
 
-# Navigate to project
+## Navigate to project
 cd cooking-recipe-website
 
-# Install dependencies
+## Install dependencies
 npm install
 
-# Run project
+## Run project
 npm run dev
 
 # Usage 
